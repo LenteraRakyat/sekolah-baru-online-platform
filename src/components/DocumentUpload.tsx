@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -13,15 +12,7 @@ import {
   Trash2
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-
-interface Document {
-  name: string;
-  status: 'pending' | 'uploaded' | 'approved' | 'rejected';
-  required: boolean;
-  file?: File;
-  uploadDate?: string;
-  rejectionReason?: string;
-}
+import { Document } from "@/types/document";
 
 interface DocumentUploadProps {
   documents: Document[];

@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -6,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import Header from "@/components/Header";
 import DocumentUpload from "@/components/DocumentUpload";
+import { Document } from "@/types/document";
 import { 
   User, 
   FileText, 
@@ -20,13 +20,13 @@ import {
 
 const StudentDashboard = () => {
   const [applicationStatus] = useState("pending");
-  const [documents, setDocuments] = useState([
-    { name: "Ijazah/SKHUN", status: "uploaded" as const, required: true, uploadDate: "16 Jan 2024" },
-    { name: "Kartu Keluarga", status: "uploaded" as const, required: true, uploadDate: "16 Jan 2024" },
-    { name: "Akta Kelahiran", status: "approved" as const, required: true, uploadDate: "15 Jan 2024" },
-    { name: "Pas Foto", status: "pending" as const, required: true },
-    { name: "Surat Keterangan Sehat", status: "rejected" as const, required: true, uploadDate: "15 Jan 2024", rejectionReason: "Foto tidak jelas, silakan upload ulang dengan resolusi yang lebih baik" },
-    { name: "Rapor Semester 1-5", status: "approved" as const, required: true, uploadDate: "15 Jan 2024" },
+  const [documents, setDocuments] = useState<Document[]>([
+    { name: "Ijazah/SKHUN", status: "uploaded", required: true, uploadDate: "16 Jan 2024" },
+    { name: "Kartu Keluarga", status: "uploaded", required: true, uploadDate: "16 Jan 2024" },
+    { name: "Akta Kelahiran", status: "approved", required: true, uploadDate: "15 Jan 2024" },
+    { name: "Pas Foto", status: "pending", required: true },
+    { name: "Surat Keterangan Sehat", status: "rejected", required: true, uploadDate: "15 Jan 2024", rejectionReason: "Foto tidak jelas, silakan upload ulang dengan resolusi yang lebih baik" },
+    { name: "Rapor Semester 1-5", status: "approved", required: true, uploadDate: "15 Jan 2024" },
   ]);
 
   const student = {
@@ -47,7 +47,13 @@ const StudentDashboard = () => {
   const handleDocumentUpload = (docName: string, file: File) => {
     setDocuments(prev => prev.map(doc => 
       doc.name === docName 
-        ? { ...doc, status: "uploaded" as const, file, uploadDate: new Date().toLocaleDateString('id-ID') }
+        ? { 
+            ...doc, 
+            status: "uploaded" as const, 
+            file, 
+            uploadDate: new Date().toLocaleDateString('id-ID'),
+            rejectionReason: undefined
+          }
         : doc
     ));
   };
@@ -55,7 +61,13 @@ const StudentDashboard = () => {
   const handleDocumentDelete = (docName: string) => {
     setDocuments(prev => prev.map(doc => 
       doc.name === docName 
-        ? { ...doc, status: "pending" as const, file: undefined, uploadDate: undefined }
+        ? { 
+            ...doc, 
+            status: "pending" as const, 
+            file: undefined, 
+            uploadDate: undefined,
+            rejectionReason: undefined
+          }
         : doc
     ));
   };
