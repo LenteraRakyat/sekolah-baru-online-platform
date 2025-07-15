@@ -2,12 +2,10 @@
 import React, { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import Header from "@/components/Header";
+import FormField from "@/components/FormField";
+import StepIndicator from "@/components/StepIndicator";
 import { useToast } from "@/hooks/use-toast";
 import { 
   User, 
@@ -17,7 +15,9 @@ import {
   Calendar,
   GraduationCap,
   FileText,
-  CheckCircle
+  CheckCircle,
+  ArrowLeft,
+  ArrowRight
 } from "lucide-react";
 
 const StudentRegistration = () => {
@@ -31,7 +31,7 @@ const StudentRegistration = () => {
     birthPlace: "",
     birthDate: "",
     religion: "",
-    nationality: "",
+    nationality: "Indonesia",
     
     // Contact Info
     address: "",
@@ -55,6 +55,9 @@ const StudentRegistration = () => {
     agreement: false
   });
 
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const steps = [
     { number: 1, title: "Data Pribadi", icon: User },
     { number: 2, title: "Kontak & Alamat", icon: MapPin },
@@ -68,227 +71,306 @@ const StudentRegistration = () => {
       ...prev,
       [field]: value
     }));
+    
+    // Clear error when user starts typing
+    if (errors[field]) {
+      setErrors(prev => ({
+        ...prev,
+        [field]: ''
+      }));
+    }
   };
 
-  const handleSubmit = () => {
-    toast({
-      title: "Pendaftaran Berhasil!",
-      description: "Data Anda telah tersimpan. Silakan login ke dashboard untuk melanjutkan proses.",
-    });
+  const validateStep = (step: number): boolean => {
+    const newErrors: Record<string, string> = {};
+    
+    switch (step) {
+      case 1:
+        if (!formData.fullName.trim()) newErrors.fullName = "Nama lengkap wajib diisi";
+        if (!formData.gender) newErrors.gender = "Jenis kelamin wajib dipilih";
+        if (!formData.birthPlace.trim()) newErrors.birthPlace = "Tempat lahir wajib diisi";
+        if (!formData.birthDate) newErrors.birthDate = "Tanggal lahir wajib diisi";
+        if (!formData.religion) newErrors.religion = "Agama wajib dipilih";
+        break;
+      case 2:
+        if (!formData.address.trim()) newErrors.address = "Alamat wajib diisi";
+        if (!formData.phone.trim()) newErrors.phone = "Nomor HP wajib diisi";
+        if (!formData.email.trim()) newErrors.email = "Email wajib diisi";
+        else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+          newErrors.email = "Format email tidak valid";
+        }
+        break;
+      case 3:
+        if (!formData.previousSchool.trim()) newErrors.previousSchool = "Asal sekolah wajib diisi";
+        if (!formData.graduationYear) newErrors.graduationYear = "Tahun lulus wajib dipilih";
+        if (!formData.nisn.trim()) newErrors.nisn = "NISN wajib diisi";
+        break;
+      case 4:
+        if (!formData.fatherName.trim()) newErrors.fatherName = "Nama ayah wajib diisi";
+        if (!formData.fatherJob.trim()) newErrors.fatherJob = "Pekerjaan ayah wajib diisi";
+        if (!formData.motherName.trim()) newErrors.motherName = "Nama ibu wajib diisi";
+        if (!formData.motherJob.trim()) newErrors.motherJob = "Pekerjaan ibu wajib diisi";
+        if (!formData.parentPhone.trim()) newErrors.parentPhone = "Nomor HP orang tua wajib diisi";
+        break;
+      case 5:
+        if (!formData.agreement) newErrors.agreement = "Anda harus menyetujui pernyataan";
+        break;
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
+
+  const handleNext = () => {
+    if (validateStep(currentStep)) {
+      setCurrentStep(prev => prev + 1);
+    }
+  };
+
+  const handlePrevious = () => {
+    setCurrentStep(prev => Math.max(1, prev - 1));
+  };
+
+  const handleSubmit = async () => {
+    if (!validateStep(currentStep)) return;
+    
+    setIsSubmitting(true);
+    
+    // Simulate API call
+    setTimeout(() => {
+      toast({
+        title: "Pendaftaran Berhasil!",
+        description: "Data Anda telah tersimpan. Silakan login ke dashboard untuk melanjutkan proses.",
+      });
+      setIsSubmitting(false);
+    }, 2000);
+  };
+
+  const genderOptions = [
+    { value: "male", label: "Laki-laki" },
+    { value: "female", label: "Perempuan" }
+  ];
+
+  const religionOptions = [
+    { value: "islam", label: "Islam" },
+    { value: "kristen", label: "Kristen" },
+    { value: "katolik", label: "Katolik" },
+    { value: "hindu", label: "Hindu" },
+    { value: "buddha", label: "Buddha" },
+    { value: "konghucu", label: "Konghucu" }
+  ];
+
+  const graduationYearOptions = [
+    { value: "2024", label: "2024" },
+    { value: "2023", label: "2023" },
+    { value: "2022", label: "2022" }
+  ];
 
   const renderStep = () => {
     switch (currentStep) {
       case 1:
         return (
-          <div className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="fullName">Nama Lengkap *</Label>
-                <Input
-                  id="fullName"
-                  value={formData.fullName}
-                  onChange={(e) => handleInputChange("fullName", e.target.value)}
-                  placeholder="Masukkan nama lengkap"
-                />
-              </div>
-              <div>
-                <Label htmlFor="nickname">Nama Panggilan</Label>
-                <Input
-                  id="nickname"
-                  value={formData.nickname}
-                  onChange={(e) => handleInputChange("nickname", e.target.value)}
-                  placeholder="Nama panggilan"
-                />
-              </div>
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <FormField
+                id="fullName"
+                label="Nama Lengkap"
+                value={formData.fullName}
+                onChange={(value) => handleInputChange("fullName", value)}
+                placeholder="Masukkan nama lengkap"
+                required
+                error={errors.fullName}
+              />
+              <FormField
+                id="nickname"
+                label="Nama Panggilan"
+                value={formData.nickname}
+                onChange={(value) => handleInputChange("nickname", value)}
+                placeholder="Nama panggilan"
+              />
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="gender">Jenis Kelamin *</Label>
-                <Select value={formData.gender} onValueChange={(value) => handleInputChange("gender", value)}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Pilih jenis kelamin" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="male">Laki-laki</SelectItem>
-                    <SelectItem value="female">Perempuan</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <Label htmlFor="religion">Agama *</Label>
-                <Select value={formData.religion} onValueChange={(value) => handleInputChange("religion", value)}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Pilih agama" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="islam">Islam</SelectItem>
-                    <SelectItem value="kristen">Kristen</SelectItem>
-                    <SelectItem value="katolik">Katolik</SelectItem>
-                    <SelectItem value="hindu">Hindu</SelectItem>
-                    <SelectItem value="buddha">Buddha</SelectItem>
-                    <SelectItem value="konghucu">Konghucu</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <FormField
+                id="gender"
+                label="Jenis Kelamin"
+                type="select"
+                value={formData.gender}
+                onChange={(value) => handleInputChange("gender", value)}
+                placeholder="Pilih jenis kelamin"
+                options={genderOptions}
+                required
+                error={errors.gender}
+              />
+              <FormField
+                id="religion"
+                label="Agama"
+                type="select"
+                value={formData.religion}
+                onChange={(value) => handleInputChange("religion", value)}
+                placeholder="Pilih agama"
+                options={religionOptions}
+                required
+                error={errors.religion}
+              />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="birthPlace">Tempat Lahir *</Label>
-                <Input
-                  id="birthPlace"
-                  value={formData.birthPlace}
-                  onChange={(e) => handleInputChange("birthPlace", e.target.value)}
-                  placeholder="Kota kelahiran"
-                />
-              </div>
-              <div>
-                <Label htmlFor="birthDate">Tanggal Lahir *</Label>
-                <Input
-                  id="birthDate"
-                  type="date"
-                  value={formData.birthDate}
-                  onChange={(e) => handleInputChange("birthDate", e.target.value)}
-                />
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <FormField
+                id="birthPlace"
+                label="Tempat Lahir"
+                value={formData.birthPlace}
+                onChange={(value) => handleInputChange("birthPlace", value)}
+                placeholder="Kota kelahiran"
+                required
+                error={errors.birthPlace}
+              />
+              <FormField
+                id="birthDate"
+                label="Tanggal Lahir"
+                type="date"
+                value={formData.birthDate}
+                onChange={(value) => handleInputChange("birthDate", value)}
+                required
+                error={errors.birthDate}
+              />
             </div>
           </div>
         );
 
       case 2:
         return (
-          <div className="space-y-4">
-            <div>
-              <Label htmlFor="address">Alamat Lengkap *</Label>
-              <Textarea
-                id="address"
-                value={formData.address}
-                onChange={(e) => handleInputChange("address", e.target.value)}
-                placeholder="Masukkan alamat lengkap"
-                rows={3}
-              />
-            </div>
+          <div className="space-y-6">
+            <FormField
+              id="address"
+              label="Alamat Lengkap"
+              type="textarea"
+              value={formData.address}
+              onChange={(value) => handleInputChange("address", value)}
+              placeholder="Masukkan alamat lengkap"
+              required
+              error={errors.address}
+              rows={3}
+            />
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="phone">Nomor HP *</Label>
-                <Input
-                  id="phone"
-                  value={formData.phone}
-                  onChange={(e) => handleInputChange("phone", e.target.value)}
-                  placeholder="08123456789"
-                />
-              </div>
-              <div>
-                <Label htmlFor="email">Email *</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) => handleInputChange("email", e.target.value)}
-                  placeholder="email@contoh.com"
-                />
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <FormField
+                id="phone"
+                label="Nomor HP"
+                type="tel"
+                value={formData.phone}
+                onChange={(value) => handleInputChange("phone", value)}
+                placeholder="08123456789"
+                required
+                error={errors.phone}
+              />
+              <FormField
+                id="email"
+                label="Email"
+                type="email"
+                value={formData.email}
+                onChange={(value) => handleInputChange("email", value)}
+                placeholder="email@contoh.com"
+                required
+                error={errors.email}
+              />
             </div>
           </div>
         );
 
       case 3:
         return (
-          <div className="space-y-4">
-            <div>
-              <Label htmlFor="previousSchool">Asal Sekolah *</Label>
-              <Input
-                id="previousSchool"
-                value={formData.previousSchool}
-                onChange={(e) => handleInputChange("previousSchool", e.target.value)}
-                placeholder="Nama sekolah asal"
-              />
-            </div>
+          <div className="space-y-6">
+            <FormField
+              id="previousSchool"
+              label="Asal Sekolah"
+              value={formData.previousSchool}
+              onChange={(value) => handleInputChange("previousSchool", value)}
+              placeholder="Nama sekolah asal"
+              required
+              error={errors.previousSchool}
+            />
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="graduationYear">Tahun Lulus *</Label>
-                <Select value={formData.graduationYear} onValueChange={(value) => handleInputChange("graduationYear", value)}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Pilih tahun lulus" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="2024">2024</SelectItem>
-                    <SelectItem value="2023">2023</SelectItem>
-                    <SelectItem value="2022">2022</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <Label htmlFor="nisn">NISN *</Label>
-                <Input
-                  id="nisn"
-                  value={formData.nisn}
-                  onChange={(e) => handleInputChange("nisn", e.target.value)}
-                  placeholder="Nomor Induk Siswa Nasional"
-                />
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <FormField
+                id="graduationYear"
+                label="Tahun Lulus"
+                type="select"
+                value={formData.graduationYear}
+                onChange={(value) => handleInputChange("graduationYear", value)}
+                placeholder="Pilih tahun lulus"
+                options={graduationYearOptions}
+                required
+                error={errors.graduationYear}
+              />
+              <FormField
+                id="nisn"
+                label="NISN"
+                value={formData.nisn}
+                onChange={(value) => handleInputChange("nisn", value)}
+                placeholder="Nomor Induk Siswa Nasional"
+                required
+                error={errors.nisn}
+              />
             </div>
           </div>
         );
 
       case 4:
         return (
-          <div className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="fatherName">Nama Ayah *</Label>
-                <Input
-                  id="fatherName"
-                  value={formData.fatherName}
-                  onChange={(e) => handleInputChange("fatherName", e.target.value)}
-                  placeholder="Nama lengkap ayah"
-                />
-              </div>
-              <div>
-                <Label htmlFor="fatherJob">Pekerjaan Ayah *</Label>
-                <Input
-                  id="fatherJob"
-                  value={formData.fatherJob}
-                  onChange={(e) => handleInputChange("fatherJob", e.target.value)}
-                  placeholder="Pekerjaan ayah"
-                />
-              </div>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="motherName">Nama Ibu *</Label>
-                <Input
-                  id="motherName"
-                  value={formData.motherName}
-                  onChange={(e) => handleInputChange("motherName", e.target.value)}
-                  placeholder="Nama lengkap ibu"
-                />
-              </div>
-              <div>
-                <Label htmlFor="motherJob">Pekerjaan Ibu *</Label>
-                <Input
-                  id="motherJob"
-                  value={formData.motherJob}
-                  onChange={(e) => handleInputChange("motherJob", e.target.value)}
-                  placeholder="Pekerjaan ibu"
-                />
-              </div>
-            </div>
-
-            <div>
-              <Label htmlFor="parentPhone">Nomor HP Orang Tua *</Label>
-              <Input
-                id="parentPhone"
-                value={formData.parentPhone}
-                onChange={(e) => handleInputChange("parentPhone", e.target.value)}
-                placeholder="08123456789"
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <FormField
+                id="fatherName"
+                label="Nama Ayah"
+                value={formData.fatherName}
+                onChange={(value) => handleInputChange("fatherName", value)}
+                placeholder="Nama lengkap ayah"
+                required
+                error={errors.fatherName}
+              />
+              <FormField
+                id="fatherJob"
+                label="Pekerjaan Ayah"
+                value={formData.fatherJob}
+                onChange={(value) => handleInputChange("fatherJob", value)}
+                placeholder="Pekerjaan ayah"
+                required
+                error={errors.fatherJob}
               />
             </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <FormField
+                id="motherName"
+                label="Nama Ibu"
+                value={formData.motherName}
+                onChange={(value) => handleInputChange("motherName", value)}
+                placeholder="Nama lengkap ibu"
+                required
+                error={errors.motherName}
+              />
+              <FormField
+                id="motherJob"
+                label="Pekerjaan Ibu"
+                value={formData.motherJob}
+                onChange={(value) => handleInputChange("motherJob", value)}
+                placeholder="Pekerjaan ibu"
+                required
+                error={errors.motherJob}
+              />
+            </div>
+
+            <FormField
+              id="parentPhone"
+              label="Nomor HP Orang Tua"
+              type="tel"
+              value={formData.parentPhone}
+              onChange={(value) => handleInputChange("parentPhone", value)}
+              placeholder="08123456789"
+              required
+              error={errors.parentPhone}
+            />
           </div>
         );
 
@@ -313,26 +395,30 @@ const StudentRegistration = () => {
               </div>
             </div>
 
-            <div>
-              <Label htmlFor="achievements">Prestasi/Penghargaan (Opsional)</Label>
-              <Textarea
-                id="achievements"
-                value={formData.achievements}
-                onChange={(e) => handleInputChange("achievements", e.target.value)}
-                placeholder="Tuliskan prestasi atau penghargaan yang pernah diraih"
-                rows={3}
-              />
-            </div>
+            <FormField
+              id="achievements"
+              label="Prestasi/Penghargaan (Opsional)"
+              type="textarea"
+              value={formData.achievements}
+              onChange={(value) => handleInputChange("achievements", value)}
+              placeholder="Tuliskan prestasi atau penghargaan yang pernah diraih"
+              rows={3}
+            />
 
-            <div className="flex items-center space-x-2">
+            <div className="flex items-start space-x-3">
               <Checkbox
                 id="agreement"
                 checked={formData.agreement}
                 onCheckedChange={(checked) => handleInputChange("agreement", checked as boolean)}
               />
-              <Label htmlFor="agreement" className="text-sm">
-                Saya menyatakan bahwa data yang saya masukkan adalah benar dan dapat dipertanggungjawabkan.
-              </Label>
+              <div className="space-y-1">
+                <label htmlFor="agreement" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                  Saya menyatakan bahwa data yang saya masukkan adalah benar dan dapat dipertanggungjawabkan.
+                </label>
+                {errors.agreement && (
+                  <p className="text-sm text-red-600">{errors.agreement}</p>
+                )}
+              </div>
             </div>
           </div>
         );
@@ -354,33 +440,7 @@ const StudentRegistration = () => {
         </div>
 
         {/* Progress Steps */}
-        <div className="mb-8">
-          <div className="flex justify-between items-center max-w-4xl mx-auto">
-            {steps.map((step, index) => (
-              <div key={step.number} className="flex flex-col items-center">
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium mb-2 ${
-                  currentStep >= step.number 
-                    ? 'bg-blue-600 text-white' 
-                    : 'bg-gray-200 text-gray-600'
-                }`}>
-                  {currentStep > step.number ? (
-                    <CheckCircle className="h-5 w-5" />
-                  ) : (
-                    step.number
-                  )}
-                </div>
-                <span className="text-xs text-center text-gray-600 hidden sm:block">
-                  {step.title}
-                </span>
-                {index < steps.length - 1 && (
-                  <div className={`hidden sm:block absolute h-0.5 w-20 mt-5 ${
-                    currentStep > step.number ? 'bg-blue-600' : 'bg-gray-200'
-                  }`} style={{ marginLeft: '2.5rem' }} />
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
+        <StepIndicator steps={steps} currentStep={currentStep} />
 
         {/* Form */}
         <Card className="max-w-4xl mx-auto border-0 shadow-lg">
@@ -399,27 +459,39 @@ const StudentRegistration = () => {
             <div className="flex justify-between mt-8 pt-6 border-t border-gray-200">
               <Button
                 variant="outline"
-                onClick={() => setCurrentStep(prev => Math.max(1, prev - 1))}
+                onClick={handlePrevious}
                 disabled={currentStep === 1}
+                className="flex items-center"
               >
+                <ArrowLeft className="h-4 w-4 mr-2" />
                 Sebelumnya
               </Button>
               
               {currentStep < steps.length ? (
                 <Button
-                  onClick={() => setCurrentStep(prev => prev + 1)}
-                  className="bg-blue-600 hover:bg-blue-700"
+                  onClick={handleNext}
+                  className="bg-blue-600 hover:bg-blue-700 flex items-center"
                 >
                   Selanjutnya
+                  <ArrowRight className="h-4 w-4 ml-2" />
                 </Button>
               ) : (
                 <Button
                   onClick={handleSubmit}
-                  disabled={!formData.agreement}
-                  className="bg-green-600 hover:bg-green-700"
+                  disabled={!formData.agreement || isSubmitting}
+                  className="bg-green-600 hover:bg-green-700 flex items-center"
                 >
-                  <FileText className="h-4 w-4 mr-2" />
-                  Kirim Pendaftaran
+                  {isSubmitting ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                      Mengirim...
+                    </>
+                  ) : (
+                    <>
+                      <FileText className="h-4 w-4 mr-2" />
+                      Kirim Pendaftaran
+                    </>
+                  )}
                 </Button>
               )}
             </div>

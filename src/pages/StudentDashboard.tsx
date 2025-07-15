@@ -5,20 +5,29 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import Header from "@/components/Header";
+import DocumentUpload from "@/components/DocumentUpload";
 import { 
   User, 
   FileText, 
-  Upload, 
   CheckCircle,
   AlertCircle,
   Calendar,
   Download,
   Edit,
-  Clock
+  Clock,
+  Send
 } from "lucide-react";
 
 const StudentDashboard = () => {
-  const [applicationStatus] = useState("pending"); // pending, approved, rejected
+  const [applicationStatus] = useState("pending");
+  const [documents, setDocuments] = useState([
+    { name: "Ijazah/SKHUN", status: "uploaded" as const, required: true, uploadDate: "16 Jan 2024" },
+    { name: "Kartu Keluarga", status: "uploaded" as const, required: true, uploadDate: "16 Jan 2024" },
+    { name: "Akta Kelahiran", status: "approved" as const, required: true, uploadDate: "15 Jan 2024" },
+    { name: "Pas Foto", status: "pending" as const, required: true },
+    { name: "Surat Keterangan Sehat", status: "rejected" as const, required: true, uploadDate: "15 Jan 2024", rejectionReason: "Foto tidak jelas, silakan upload ulang dengan resolusi yang lebih baik" },
+    { name: "Rapor Semester 1-5", status: "approved" as const, required: true, uploadDate: "15 Jan 2024" },
+  ]);
 
   const student = {
     name: "Ahmad Fadil Rahman",
@@ -28,21 +37,28 @@ const StudentDashboard = () => {
     status: "pending"
   };
 
-  const documents = [
-    { name: "Ijazah/SKHUN", status: "uploaded", required: true },
-    { name: "Kartu Keluarga", status: "uploaded", required: true },
-    { name: "Akta Kelahiran", status: "uploaded", required: true },
-    { name: "Pas Foto", status: "pending", required: true },
-    { name: "Surat Keterangan Sehat", status: "pending", required: true },
-    { name: "Rapor Semester 1-5", status: "uploaded", required: true },
-  ];
-
   const timeline = [
     { step: "Pendaftaran", status: "completed", date: "15 Jan 2024" },
     { step: "Upload Dokumen", status: "current", date: "16 Jan 2024" },
     { step: "Verifikasi", status: "upcoming", date: "20 Jan 2024" },
     { step: "Pengumuman", status: "upcoming", date: "25 Jan 2024" },
   ];
+
+  const handleDocumentUpload = (docName: string, file: File) => {
+    setDocuments(prev => prev.map(doc => 
+      doc.name === docName 
+        ? { ...doc, status: "uploaded" as const, file, uploadDate: new Date().toLocaleDateString('id-ID') }
+        : doc
+    ));
+  };
+
+  const handleDocumentDelete = (docName: string) => {
+    setDocuments(prev => prev.map(doc => 
+      doc.name === docName 
+        ? { ...doc, status: "pending" as const, file: undefined, uploadDate: undefined }
+        : doc
+    ));
+  };
 
   const getStatusBadge = (status: string) => {
     const variants = {
@@ -63,8 +79,8 @@ const StudentDashboard = () => {
     return variants[status as keyof typeof variants] || variants.upcoming;
   };
 
-  const uploadedDocs = documents.filter(doc => doc.status === "uploaded").length;
-  const progressPercentage = (uploadedDocs / documents.length) * 100;
+  const approvedDocs = documents.filter(doc => doc.status === "approved" || doc.status === "uploaded").length;
+  const progressPercentage = (approvedDocs / documents.length) * 100;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -78,7 +94,7 @@ const StudentDashboard = () => {
               <h1 className="text-3xl font-bold text-gray-900 mb-2">Dashboard Siswa</h1>
               <p className="text-gray-600">Pantau status pendaftaran dan kelola dokumen Anda</p>
             </div>
-            <Badge className={`${getStatusBadge(student.status).color} text-sm px-3 py-1`}>
+            <Badge className={`${getStatusBadge(student.status).color} text-sm px-4 py-2`}>
               Status: {getStatusBadge(student.status).label}
             </Badge>
           </div>
@@ -117,14 +133,16 @@ const StudentDashboard = () => {
                 </div>
               </div>
               <div className="mt-6 pt-6 border-t border-gray-200">
-                <Button variant="outline" className="mr-3">
-                  <Edit className="h-4 w-4 mr-2" />
-                  Edit Profil
-                </Button>
-                <Button variant="outline">
-                  <Download className="h-4 w-4 mr-2" />
-                  Cetak Kartu Peserta
-                </Button>
+                <div className="flex flex-wrap gap-3">
+                  <Button variant="outline" className="flex items-center">
+                    <Edit className="h-4 w-4 mr-2" />
+                    Edit Profil
+                  </Button>
+                  <Button variant="outline" className="flex items-center">
+                    <Download className="h-4 w-4 mr-2" />
+                    Cetak Kartu Peserta
+                  </Button>
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -140,9 +158,12 @@ const StudentDashboard = () => {
                 <div>
                   <div className="flex justify-between items-center mb-2">
                     <span className="text-sm font-medium">Dokumen</span>
-                    <span className="text-sm text-gray-600">{uploadedDocs}/{documents.length}</span>
+                    <span className="text-sm text-gray-600">{approvedDocs}/{documents.length}</span>
                   </div>
-                  <Progress value={progressPercentage} className="h-2" />
+                  <Progress value={progressPercentage} className="h-3" />
+                  <p className="text-xs text-gray-500 mt-1">
+                    {progressPercentage.toFixed(0)}% selesai
+                  </p>
                 </div>
                 <div className="pt-4 space-y-3">
                   {timeline.map((step, index) => {
@@ -172,47 +193,26 @@ const StudentDashboard = () => {
               <CardDescription>Upload dan kelola dokumen pendaftaran Anda</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {documents.map((doc, index) => (
-                  <div key={index} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
-                    <div className="flex items-start justify-between mb-3">
-                      <h4 className="font-medium text-gray-900 text-sm">{doc.name}</h4>
-                      {doc.required && (
-                        <span className="text-xs text-red-500">*</span>
-                      )}
-                    </div>
-                    
-                    <div className="flex items-center justify-between">
-                      <Badge className={`${getStatusBadge(doc.status).color} text-xs`}>
-                        {getStatusBadge(doc.status).label}
-                      </Badge>
-                      
-                      {doc.status === "pending" ? (
-                        <Button size="sm" variant="outline">
-                          <Upload className="h-3 w-3 mr-1" />
-                          Upload
-                        </Button>
-                      ) : (
-                        <div className="flex gap-1">
-                          <Button size="sm" variant="ghost">
-                            <Download className="h-3 w-3" />
-                          </Button>
-                          <Button size="sm" variant="ghost">
-                            <Edit className="h-3 w-3" />
-                          </Button>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <DocumentUpload
+                documents={documents}
+                onDocumentUpload={handleDocumentUpload}
+                onDocumentDelete={handleDocumentDelete}
+              />
               
-              <div className="mt-6 pt-6 border-t border-gray-200 flex justify-between">
-                <p className="text-sm text-gray-600">
-                  {uploadedDocs} dari {documents.length} dokumen sudah diupload
-                </p>
-                <Button>
-                  <CheckCircle className="h-4 w-4 mr-2" />
+              <div className="mt-6 pt-6 border-t border-gray-200 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <div className="text-sm text-gray-600">
+                  <p className="mb-1">
+                    {approvedDocs} dari {documents.length} dokumen sudah diupload
+                  </p>
+                  <p className="text-xs">
+                    {documents.filter(doc => doc.status === "rejected").length} dokumen perlu diperbaiki
+                  </p>
+                </div>
+                <Button 
+                  className="bg-green-600 hover:bg-green-700 flex items-center"
+                  disabled={approvedDocs < documents.length}
+                >
+                  <Send className="h-4 w-4 mr-2" />
                   Kirim Berkas
                 </Button>
               </div>
@@ -229,18 +229,30 @@ const StudentDashboard = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-3 text-blue-700">
-                <p className="text-sm">
-                  • Pastikan semua dokumen sudah diupload sebelum tanggal 20 Januari 2024
-                </p>
-                <p className="text-sm">
-                  • Format file yang diterima: PDF, JPG, PNG (maksimal 2MB per file)
-                </p>
-                <p className="text-sm">
-                  • Dokumen yang sudah diupload tidak dapat diubah setelah verifikasi dimulai
-                </p>
-                <p className="text-sm">
-                  • Hubungi panitia jika mengalami kesulitan dalam proses upload dokumen
-                </p>
+                <div className="flex items-start">
+                  <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                  <p className="text-sm">
+                    Pastikan semua dokumen sudah diupload sebelum tanggal 20 Januari 2024
+                  </p>
+                </div>
+                <div className="flex items-start">
+                  <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                  <p className="text-sm">
+                    Format file yang diterima: PDF, JPG, PNG (maksimal 2MB per file)
+                  </p>
+                </div>
+                <div className="flex items-start">
+                  <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                  <p className="text-sm">
+                    Dokumen yang sudah diupload tidak dapat diubah setelah verifikasi dimulai
+                  </p>
+                </div>
+                <div className="flex items-start">
+                  <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                  <p className="text-sm">
+                    Hubungi panitia jika mengalami kesulitan dalam proses upload dokumen
+                  </p>
+                </div>
               </div>
             </CardContent>
           </Card>
