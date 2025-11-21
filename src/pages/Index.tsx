@@ -2,6 +2,13 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import Header from "@/components/Header";
 import { 
   Calendar, 
@@ -15,6 +22,11 @@ import {
   Phone,
   Mail
 } from "lucide-react";
+import schoolBuilding from "@/assets/school-building.jpg";
+import studentsClassroom from "@/assets/students-classroom.jpg";
+import schoolLibrary from "@/assets/school-library.jpg";
+import sportsFacilities from "@/assets/sports-facilities.jpg";
+import scienceLab from "@/assets/science-lab.jpg";
 
 const Index = () => {
   const timeline = [
@@ -31,6 +43,14 @@ const Index = () => {
     "Pas Foto terbaru 3x4 (2 lembar)",
     "Surat Keterangan Sehat dari Dokter",
     "Fotokopi Rapor Semester 1-5"
+  ];
+
+  const carouselImages = [
+    { src: schoolBuilding, title: "Gedung Sekolah", description: "Fasilitas modern dan nyaman" },
+    { src: studentsClassroom, title: "Ruang Kelas", description: "Suasana belajar yang kondusif" },
+    { src: schoolLibrary, title: "Perpustakaan", description: "Koleksi buku lengkap" },
+    { src: sportsFacilities, title: "Fasilitas Olahraga", description: "Lapangan dan sarana olahraga" },
+    { src: scienceLab, title: "Laboratorium", description: "Lab sains modern" },
   ];
 
   return (
@@ -66,8 +86,54 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Stats Section */}
+      {/* Carousel Section */}
       <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Fasilitas Sekolah</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Lihat berbagai fasilitas dan lingkungan belajar di SMA Negeri 1 Lovable
+            </p>
+          </div>
+          
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full max-w-5xl mx-auto"
+          >
+            <CarouselContent>
+              {carouselImages.map((image, index) => (
+                <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                  <div className="p-1">
+                    <Card className="border-0 shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                      <CardContent className="p-0">
+                        <div className="relative aspect-video overflow-hidden">
+                          <img
+                            src={image.src}
+                            alt={image.title}
+                            className="w-full h-full object-cover transition-transform hover:scale-110 duration-500"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-4">
+                            <h3 className="text-white font-bold text-lg mb-1">{image.title}</h3>
+                            <p className="text-white/90 text-sm">{image.description}</p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="hidden md:flex" />
+            <CarouselNext className="hidden md:flex" />
+          </Carousel>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <Card className="text-center border-0 shadow-lg hover:shadow-xl transition-shadow gradient-card">
