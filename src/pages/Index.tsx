@@ -27,6 +27,7 @@ import studentsClassroom from "@/assets/students-classroom.jpg";
 import schoolLibrary from "@/assets/school-library.jpg";
 import sportsFacilities from "@/assets/sports-facilities.jpg";
 import scienceLab from "@/assets/science-lab.jpg";
+import heroStudents from "@/assets/hero-students.jpg";
 
 const Index = () => {
   const timeline = [
@@ -58,8 +59,18 @@ const Index = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-r from-blue-600 to-purple-600 text-white">
-        <div className="absolute inset-0 bg-black/10"></div>
+      <section className="relative overflow-hidden text-white">
+        {/* Background Image */}
+        <div className="absolute inset-0">
+          <img 
+            src={heroStudents} 
+            alt="Students celebrating" 
+            className="w-full h-full object-cover"
+          />
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-600/90 via-purple-600/85 to-blue-600/90"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/30"></div>
+        </div>
         <div className="relative container mx-auto px-4 py-20 sm:py-24">
           <div className="text-center max-w-4xl mx-auto">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 slide-in-up">
