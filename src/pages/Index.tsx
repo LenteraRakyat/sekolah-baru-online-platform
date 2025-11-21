@@ -20,7 +20,9 @@ import {
   Award,
   MapPin,
   Phone,
-  Mail
+  Mail,
+  Download,
+  FileCheck
 } from "lucide-react";
 import schoolBuilding from "@/assets/school-building.jpg";
 import studentsClassroom from "@/assets/students-classroom.jpg";
@@ -219,8 +221,82 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Requirements Section */}
+      {/* Download Section */}
       <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Unduh Dokumen</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Download file-file penting untuk proses pendaftaran
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
+              <CardContent className="p-6">
+                <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <FileText className="h-8 w-8 text-blue-600" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Formulir Pendaftaran</h3>
+                <p className="text-gray-600 text-sm mb-6">
+                  Formulir pendaftaran siswa baru yang perlu diisi
+                </p>
+                <a 
+                  href="/formulir-pendaftaran.pdf" 
+                  download="Formulir-Pendaftaran.pdf"
+                  className="inline-flex items-center justify-center w-full gap-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 h-10 px-4 py-2 text-sm font-medium transition-colors"
+                >
+                  <Download className="w-4 h-4" />
+                  Unduh Formulir
+                </a>
+              </CardContent>
+            </Card>
+
+            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
+              <CardContent className="p-6">
+                <div className="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <BookOpen className="h-8 w-8 text-purple-600" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Brosur Sekolah</h3>
+                <p className="text-gray-600 text-sm mb-6">
+                  Informasi lengkap tentang fasilitas dan program sekolah
+                </p>
+                <a 
+                  href="/brosur-sekolah.pdf" 
+                  download="Brosur-Sekolah.pdf"
+                  className="inline-flex items-center justify-center w-full gap-2 rounded-md bg-purple-600 text-white hover:bg-purple-700 h-10 px-4 py-2 text-sm font-medium transition-colors"
+                >
+                  <Download className="w-4 h-4" />
+                  Unduh Brosur
+                </a>
+              </CardContent>
+            </Card>
+
+            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
+              <CardContent className="p-6">
+                <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <FileCheck className="h-8 w-8 text-green-600" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Panduan Pendaftaran</h3>
+                <p className="text-gray-600 text-sm mb-6">
+                  Panduan lengkap langkah-langkah pendaftaran siswa baru
+                </p>
+                <a 
+                  href="/panduan-pendaftaran.pdf" 
+                  download="Panduan-Pendaftaran.pdf"
+                  className="inline-flex items-center justify-center w-full gap-2 rounded-md bg-green-600 text-white hover:bg-green-700 h-10 px-4 py-2 text-sm font-medium transition-colors"
+                >
+                  <Download className="w-4 h-4" />
+                  Unduh Panduan
+                </a>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Requirements Section */}
+      <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
