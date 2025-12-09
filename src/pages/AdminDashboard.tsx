@@ -12,6 +12,7 @@ import { AppSidebar } from "@/components/AppSidebar";
 import UserManagement from "@/components/UserManagement";
 import SchoolSettings from "@/components/SchoolSettings";
 import Reports from "@/components/Reports";
+import ApplicationsManagement from "@/components/ApplicationsManagement";
 import { 
   Users, 
   FileCheck, 
@@ -424,7 +425,7 @@ const AdminDashboard = () => {
               <Route path="/school-settings" element={<SchoolSettings />} />
               <Route path="/reports" element={<Reports />} />
               {/* Placeholder untuk rute lainnya */}
-              <Route path="/applications" element={<div className="p-6"><h2 className="text-2xl font-bold">Kelola Pendaftaran</h2><p className="text-muted-foreground">Halaman ini akan segera tersedia</p></div>} />
+              <Route path="/applications" element={<ApplicationsManagement />} />
               <Route path="/students" element={<div className="p-6"><h2 className="text-2xl font-bold">Data Calon Siswa</h2><p className="text-muted-foreground">Halaman ini akan segera tersedia</p></div>} />
               <Route path="/verification" element={<div className="p-6"><h2 className="text-2xl font-bold">Verifikasi Dokumen</h2><p className="text-muted-foreground">Halaman ini akan segera tersedia</p></div>} />
               <Route path="/announcements" element={<div className="p-6"><h2 className="text-2xl font-bold">Kelola Pengumuman</h2><p className="text-muted-foreground">Halaman ini akan segera tersedia</p></div>} />
