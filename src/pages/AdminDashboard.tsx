@@ -13,8 +13,16 @@ import UserManagement from "@/components/UserManagement";
 import SchoolSettings from "@/components/SchoolSettings";
 import Reports from "@/components/Reports";
 import ApplicationsManagement from "@/components/ApplicationsManagement";
+import StudentsManagement from "@/components/StudentsManagement";
+import DocumentVerification from "@/components/DocumentVerification";
+import AnnouncementsManagement from "@/components/AnnouncementsManagement";
+import ScheduleManagement from "@/components/ScheduleManagement";
+import MessagesCenter from "@/components/MessagesCenter";
+import SystemSettings from "@/components/SystemSettings";
+import HelpCenter from "@/components/HelpCenter";
+import ExportData from "@/components/ExportData";
 import { 
-  Users, 
+  Users,
   FileCheck, 
   AlertCircle, 
   TrendingUp,
