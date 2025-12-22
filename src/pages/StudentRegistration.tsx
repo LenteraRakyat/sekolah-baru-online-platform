@@ -1,8 +1,10 @@
 
 import React, { useState } from "react";
+import { useSearchParams, Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Badge } from "@/components/ui/badge";
 import Header from "@/components/Header";
 import FormField from "@/components/FormField";
 import StepIndicator from "@/components/StepIndicator";
@@ -17,13 +19,43 @@ import {
   FileText,
   CheckCircle,
   ArrowLeft,
-  ArrowRight
+  ArrowRight,
+  BookOpen,
+  School
 } from "lucide-react";
 
 const StudentRegistration = () => {
   const { toast } = useToast();
+  const [searchParams] = useSearchParams();
+  const selectedLevel = searchParams.get('level') || 'sma';
+  
+  const levelInfo: Record<string, { name: string; fullName: string; icon: React.ElementType; color: string }> = {
+    sd: { 
+      name: "SD / MI", 
+      fullName: "Sekolah Dasar / Madrasah Ibtidaiyah",
+      icon: BookOpen,
+      color: "bg-blue-500"
+    },
+    smp: { 
+      name: "SMP / MTs", 
+      fullName: "Sekolah Menengah Pertama / Madrasah Tsanawiyah",
+      icon: School,
+      color: "bg-emerald-500"
+    },
+    sma: { 
+      name: "SMA / SMK / MA", 
+      fullName: "Sekolah Menengah Atas / Kejuruan / Madrasah Aliyah",
+      icon: GraduationCap,
+      color: "bg-purple-500"
+    }
+  };
+
+  const currentLevelInfo = levelInfo[selectedLevel] || levelInfo.sma;
+  const LevelIcon = currentLevelInfo.icon;
+
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
+    educationLevel: selectedLevel,
     // Personal Info
     fullName: "",
     nickname: "",
@@ -435,8 +467,21 @@ const StudentRegistration = () => {
       <div className="container mx-auto p-6">
         {/* Header */}
         <div className="text-center mb-8">
+          <div className="flex items-center justify-center gap-2 mb-3">
+            <Badge className={`${currentLevelInfo.color} text-white px-4 py-1`}>
+              <LevelIcon className="h-4 w-4 mr-2" />
+              {currentLevelInfo.name}
+            </Badge>
+          </div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Pendaftaran PPDB 2024</h1>
-          <p className="text-gray-600">Lengkapi formulir pendaftaran dengan data yang benar</p>
+          <p className="text-gray-600">{currentLevelInfo.fullName}</p>
+          <Link 
+            to="/select-level" 
+            className="text-sm text-blue-600 hover:underline mt-2 inline-flex items-center"
+          >
+            <ArrowLeft className="h-3 w-3 mr-1" />
+            Ubah Jenjang Pendidikan
+          </Link>
         </div>
 
         {/* Progress Steps */}
