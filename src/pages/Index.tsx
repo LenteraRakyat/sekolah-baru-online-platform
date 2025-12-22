@@ -83,7 +83,7 @@ const Index = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center slide-in-up">
               <Button asChild size="lg" className="bg-white text-blue-600 hover:bg-gray-100">
-                <Link to="/register">
+                <Link to="/select-level">
                   <FileText className="mr-2 h-5 w-5" />
                   Daftar Sekarang
                 </Link>
@@ -310,7 +310,7 @@ const Index = () => {
                 ))}
               </div>
               <Button asChild className="mt-8" size="lg">
-                <Link to="/register">
+                <Link to="/select-level">
                   <FileText className="mr-2 h-5 w-5" />
                   Mulai Pendaftaran
                 </Link>
@@ -362,7 +362,7 @@ const Index = () => {
             </p>
             <div className="flex justify-center space-x-4">
               <Button asChild variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-800">
-                <Link to="/register">Daftar</Link>
+                <Link to="/select-level">Daftar</Link>
               </Button>
               <Button asChild variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-800">
                 <Link to="/student">Login</Link>
