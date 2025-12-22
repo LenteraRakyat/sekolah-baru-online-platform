@@ -76,10 +76,13 @@ const Index = () => {
         <div className="relative container mx-auto px-4 py-20 sm:py-24">
           <div className="text-center max-w-4xl mx-auto">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 slide-in-up">
-              Penerimaan Peserta Didik Baru
+              Penerimaan Siswa Baru Tahun Ajaran 2026/2027
             </h1>
-            <p className="text-xl sm:text-2xl mb-8 opacity-90 slide-in-up">
-              SMA Negeri 1 Lovable - Tahun Ajaran 2024/2025
+            <p className="text-xl sm:text-2xl mb-4 opacity-90 slide-in-up font-medium">
+              Mencetak Generasi Qur'ani, Yang Cerdas, Cermat, Intelek, Kreatif dan Mandiri serta Berakhlak Mulia
+            </p>
+            <p className="text-lg sm:text-xl mb-8 opacity-80 slide-in-up">
+              Pondok Pesantren Antar Benua memadukan pendidikan pesantren, kurikulum nasional, dan teknologi modern.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center slide-in-up">
               <Button asChild size="lg" className="bg-white text-blue-600 hover:bg-gray-100">
