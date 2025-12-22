@@ -35,9 +35,9 @@ const Header = () => {
               Beranda
             </Link>
             <Link
-              to="/register"
+              to="/select-level"
               className={`text-sm font-medium transition-colors hover:text-blue-600 ${
-                isActive("/register") ? "text-blue-600" : "text-gray-700"
+                isActive("/select-level") ? "text-blue-600" : "text-gray-700"
               }`}
             >
               Daftar
@@ -87,9 +87,9 @@ const Header = () => {
                 Beranda
               </Link>
               <Link
-                to="/register"
+                to="/select-level"
                 className={`text-sm font-medium transition-colors hover:text-blue-600 ${
-                  isActive("/register") ? "text-blue-600" : "text-gray-700"
+                  isActive("/select-level") ? "text-blue-600" : "text-gray-700"
                 }`}
                 onClick={() => setIsMenuOpen(false)}
               >
