@@ -61,13 +61,13 @@ const Index = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="relative overflow-hidden text-white">
-        {/* Background Image */}
-        <div className="absolute inset-0">
+      <section className="relative overflow-hidden text-white min-h-[80vh] lg:min-h-screen flex items-center">
+        {/* Background Image - Full Width */}
+        <div className="absolute inset-0 w-screen left-1/2 -translate-x-1/2">
           <img 
             src={heroStudents} 
             alt="Students celebrating" 
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-center"
           />
           {/* Gradient Overlay */}
           <div className="absolute inset-0 bg-gradient-to-r from-blue-600/90 via-purple-600/85 to-blue-600/90"></div>
