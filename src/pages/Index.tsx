@@ -398,11 +398,11 @@ const Index = () => {
             </div>
             
             {/* Registration CTA Image */}
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl group">
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl group aspect-square">
               <img 
                 src={registrationCta} 
                 alt="Daftar Sekarang - Pondok Pesantren Antar Benua" 
-                className="w-full h-full object-cover min-h-[400px] transition-transform duration-500 group-hover:scale-105"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
               <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
