@@ -30,6 +30,7 @@ import schoolLibrary from "@/assets/school-library.jpg";
 import sportsFacilities from "@/assets/sports-facilities.jpg";
 import scienceLab from "@/assets/science-lab.jpg";
 import heroStudents from "@/assets/hero-students.jpg";
+import registrationCta from "@/assets/registration-cta.jpg";
 
 const Index = () => {
   const timeline = [
@@ -396,48 +397,25 @@ const Index = () => {
               </div>
             </div>
             
-            {/* School Info Card */}
-            <Card className="border-0 shadow-xl bg-gradient-to-br from-blue-600 to-purple-600 text-white overflow-hidden relative">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
-              <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full translate-y-1/2 -translate-x-1/2"></div>
-              <CardHeader className="pb-2 relative z-10">
-                <CardTitle className="flex items-center text-white text-xl">
-                  <div className="bg-white/20 p-2 rounded-lg mr-3">
-                    <BookOpen className="h-6 w-6" />
-                  </div>
-                  Informasi Kontak
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-5 relative z-10">
-                <div className="flex items-start gap-4 bg-white/10 p-4 rounded-xl backdrop-blur-sm">
-                  <div className="bg-white/20 p-2 rounded-lg">
-                    <MapPin className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-white/90">Alamat</p>
-                    <p className="text-white/80 text-sm">Jl. Pendidikan Islam No. 123, Kota Lovable</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4 bg-white/10 p-4 rounded-xl backdrop-blur-sm">
-                  <div className="bg-white/20 p-2 rounded-lg">
-                    <Phone className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-white/90">Telepon</p>
-                    <p className="text-white/80 text-sm">(021) 1234-5678</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4 bg-white/10 p-4 rounded-xl backdrop-blur-sm">
-                  <div className="bg-white/20 p-2 rounded-lg">
-                    <Mail className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-white/90">Email</p>
-                    <p className="text-white/80 text-sm">info@pesantrenantarbenua.sch.id</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+            {/* Registration CTA Image */}
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl group">
+              <img 
+                src={registrationCta} 
+                alt="Daftar Sekarang - Pondok Pesantren Antar Benua" 
+                className="w-full h-full object-cover min-h-[400px] transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+              <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                <h3 className="text-2xl font-bold mb-2">Bergabunglah Bersama Kami!</h3>
+                <p className="text-white/90 mb-4 text-sm">Wujudkan impian menjadi generasi Qur'ani yang berakhlak mulia</p>
+                <Button asChild className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 shadow-lg">
+                  <Link to="/select-level">
+                    <FileText className="mr-2 h-5 w-5" />
+                    Daftar Sekarang
+                  </Link>
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
