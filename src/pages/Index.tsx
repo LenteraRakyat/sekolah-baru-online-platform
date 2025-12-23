@@ -354,54 +354,86 @@ const Index = () => {
       </section>
 
       {/* Requirements Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-20 bg-gradient-to-br from-blue-50 via-white to-purple-50">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">Persyaratan Pendaftaran</h2>
-              <div className="space-y-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Persyaratan Pendaftaran</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Siapkan dokumen-dokumen berikut untuk proses pendaftaran santri baru
+            </p>
+            <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto rounded-full mt-4"></div>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {/* Requirements Cards */}
+            <div className="lg:col-span-2">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {requirements.map((req, index) => (
-                  <div key={index} className="flex items-start">
-                    <CheckCircle className="h-5 w-5 text-green-500 mr-3 mt-1 flex-shrink-0" />
-                    <span className="text-gray-700">{req}</span>
-                  </div>
+                  <Card key={index} className="border-0 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                    <CardContent className="p-5 flex items-center gap-4">
+                      <div className="bg-gradient-to-br from-green-400 to-green-600 w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 shadow-md">
+                        <CheckCircle className="h-5 w-5 text-white" />
+                      </div>
+                      <span className="text-gray-700 font-medium">{req}</span>
+                    </CardContent>
+                  </Card>
                 ))}
               </div>
-              <Button asChild className="mt-8" size="lg">
-                <Link to="/select-level">
-                  <FileText className="mr-2 h-5 w-5" />
-                  Mulai Pendaftaran
-                </Link>
-              </Button>
+              
+              <div className="mt-8 flex flex-col sm:flex-row gap-4">
+                <Button asChild size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg">
+                  <Link to="/select-level">
+                    <FileText className="mr-2 h-5 w-5" />
+                    Mulai Pendaftaran
+                  </Link>
+                </Button>
+                <Button asChild size="lg" variant="outline" className="border-2 border-blue-600 text-blue-600 hover:bg-blue-50">
+                  <a href="/panduan-pendaftaran.pdf" download>
+                    <Download className="mr-2 h-5 w-5" />
+                    Unduh Panduan
+                  </a>
+                </Button>
+              </div>
             </div>
             
-            <Card className="border-0 shadow-xl gradient-card">
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <BookOpen className="mr-2 h-6 w-6" />
-                  Informasi Sekolah
+            {/* School Info Card */}
+            <Card className="border-0 shadow-xl bg-gradient-to-br from-blue-600 to-purple-600 text-white overflow-hidden relative">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+              <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full translate-y-1/2 -translate-x-1/2"></div>
+              <CardHeader className="pb-2 relative z-10">
+                <CardTitle className="flex items-center text-white text-xl">
+                  <div className="bg-white/20 p-2 rounded-lg mr-3">
+                    <BookOpen className="h-6 w-6" />
+                  </div>
+                  Informasi Kontak
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex items-start">
-                  <MapPin className="h-5 w-5 text-gray-400 mr-3 mt-1" />
+              <CardContent className="space-y-5 relative z-10">
+                <div className="flex items-start gap-4 bg-white/10 p-4 rounded-xl backdrop-blur-sm">
+                  <div className="bg-white/20 p-2 rounded-lg">
+                    <MapPin className="h-5 w-5" />
+                  </div>
                   <div>
-                    <p className="font-medium">Alamat</p>
-                    <p className="text-gray-600">Jl. Pendidikan No. 123, Kota Lovable</p>
+                    <p className="font-semibold text-white/90">Alamat</p>
+                    <p className="text-white/80 text-sm">Jl. Pendidikan Islam No. 123, Kota Lovable</p>
                   </div>
                 </div>
-                <div className="flex items-start">
-                  <Phone className="h-5 w-5 text-gray-400 mr-3 mt-1" />
+                <div className="flex items-start gap-4 bg-white/10 p-4 rounded-xl backdrop-blur-sm">
+                  <div className="bg-white/20 p-2 rounded-lg">
+                    <Phone className="h-5 w-5" />
+                  </div>
                   <div>
-                    <p className="font-medium">Telepon</p>
-                    <p className="text-gray-600">(021) 1234-5678</p>
+                    <p className="font-semibold text-white/90">Telepon</p>
+                    <p className="text-white/80 text-sm">(021) 1234-5678</p>
                   </div>
                 </div>
-                <div className="flex items-start">
-                  <Mail className="h-5 w-5 text-gray-400 mr-3 mt-1" />
+                <div className="flex items-start gap-4 bg-white/10 p-4 rounded-xl backdrop-blur-sm">
+                  <div className="bg-white/20 p-2 rounded-lg">
+                    <Mail className="h-5 w-5" />
+                  </div>
                   <div>
-                    <p className="font-medium">Email</p>
-                    <p className="text-gray-600">info@sman1lovable.sch.id</p>
+                    <p className="font-semibold text-white/90">Email</p>
+                    <p className="text-white/80 text-sm">info@pesantrenantarbenua.sch.id</p>
                   </div>
                 </div>
               </CardContent>
@@ -411,20 +443,91 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="container mx-auto px-4">
-          <div className="text-center">
-            <h3 className="text-2xl font-bold mb-4">SMA Negeri 1 Lovable</h3>
-            <p className="text-gray-400 mb-6">
-              Membangun generasi unggul dan berkarakter untuk masa depan bangsa
-            </p>
-            <div className="flex justify-center space-x-4">
-              <Button asChild variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-800">
-                <Link to="/select-level">Daftar</Link>
-              </Button>
-              <Button asChild variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-800">
-                <Link to="/student">Login</Link>
-              </Button>
+      <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+        {/* Top Footer */}
+        <div className="container mx-auto px-4 py-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+            {/* Brand */}
+            <div className="lg:col-span-2">
+              <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                Pondok Pesantren Antar Benua
+              </h3>
+              <p className="text-gray-400 leading-relaxed mb-6 max-w-md">
+                Mencetak Generasi Qur'ani yang cerdas, cermat, intelek, kreatif, mandiri, dan berakhlak mulia untuk masa depan bangsa dan agama.
+              </p>
+              <div className="flex gap-3">
+                <Button asChild size="sm" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+                  <Link to="/select-level">
+                    <FileText className="mr-2 h-4 w-4" />
+                    Daftar Sekarang
+                  </Link>
+                </Button>
+                <Button asChild size="sm" variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white">
+                  <Link to="/student">
+                    <Users className="mr-2 h-4 w-4" />
+                    Login
+                  </Link>
+                </Button>
+              </div>
+            </div>
+            
+            {/* Quick Links */}
+            <div>
+              <h4 className="text-lg font-semibold mb-4 text-white">Link Cepat</h4>
+              <ul className="space-y-3">
+                <li>
+                  <Link to="/select-level" className="text-gray-400 hover:text-blue-400 transition-colors flex items-center gap-2">
+                    <FileText className="h-4 w-4" />
+                    Pendaftaran
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/student" className="text-gray-400 hover:text-blue-400 transition-colors flex items-center gap-2">
+                    <Users className="h-4 w-4" />
+                    Portal Santri
+                  </Link>
+                </li>
+                <li>
+                  <a href="/panduan-pendaftaran.pdf" download className="text-gray-400 hover:text-blue-400 transition-colors flex items-center gap-2">
+                    <Download className="h-4 w-4" />
+                    Unduh Panduan
+                  </a>
+                </li>
+              </ul>
+            </div>
+            
+            {/* Contact Info */}
+            <div>
+              <h4 className="text-lg font-semibold mb-4 text-white">Hubungi Kami</h4>
+              <ul className="space-y-3">
+                <li className="flex items-start gap-3 text-gray-400">
+                  <MapPin className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-sm">Jl. Pendidikan Islam No. 123, Kota Lovable</span>
+                </li>
+                <li className="flex items-center gap-3 text-gray-400">
+                  <Phone className="h-5 w-5 text-blue-400" />
+                  <span className="text-sm">(021) 1234-5678</span>
+                </li>
+                <li className="flex items-center gap-3 text-gray-400">
+                  <Mail className="h-5 w-5 text-blue-400" />
+                  <span className="text-sm">info@pesantrenantarbenua.sch.id</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        {/* Bottom Footer */}
+        <div className="border-t border-gray-700">
+          <div className="container mx-auto px-4 py-6">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+              <p className="text-gray-500 text-sm">
+                © 2024 Pondok Pesantren Antar Benua. Hak Cipta Dilindungi.
+              </p>
+              <div className="flex items-center gap-2 text-gray-500 text-sm">
+                <BookOpen className="h-4 w-4 text-blue-400" />
+                <span>Mendidik Generasi Qur'ani</span>
+              </div>
             </div>
           </div>
         </div>
