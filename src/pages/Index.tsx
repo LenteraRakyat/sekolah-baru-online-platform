@@ -102,6 +102,61 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Selayang Pandang Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Selayang Pandang</h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto rounded-full"></div>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+            <div className="relative">
+              <img 
+                src={schoolBuilding} 
+                alt="Pondok Pesantren Antar Benua" 
+                className="rounded-2xl shadow-xl w-full h-80 object-cover"
+              />
+              <div className="absolute -bottom-4 -right-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 rounded-xl shadow-lg">
+                <p className="text-2xl font-bold">Sejak 2010</p>
+                <p className="text-sm opacity-90">Mendidik Generasi Qur'ani</p>
+              </div>
+            </div>
+            
+            <div className="space-y-6">
+              <p className="text-gray-700 text-lg leading-relaxed">
+                <span className="font-semibold text-blue-600">Pondok Pesantren Antar Benua</span> adalah lembaga pendidikan Islam terpadu yang menggabungkan pendidikan pesantren tradisional dengan kurikulum nasional dan teknologi modern.
+              </p>
+              <p className="text-gray-600 leading-relaxed">
+                Didirikan dengan visi untuk mencetak generasi Qur'ani yang cerdas, cermat, intelek, kreatif, mandiri, dan berakhlak mulia, pesantren kami berkomitmen memberikan pendidikan berkualitas tinggi yang seimbang antara ilmu agama dan ilmu pengetahuan umum.
+              </p>
+              <p className="text-gray-600 leading-relaxed">
+                Dengan tenaga pengajar profesional, fasilitas modern, dan lingkungan islami yang kondusif, kami siap membimbing putra-putri Anda menjadi generasi penerus bangsa yang berakhlakul karimah.
+              </p>
+              
+              <div className="grid grid-cols-2 gap-4 pt-4">
+                <div className="bg-blue-50 p-4 rounded-xl text-center">
+                  <p className="text-3xl font-bold text-blue-600">500+</p>
+                  <p className="text-gray-600 text-sm">Santri Aktif</p>
+                </div>
+                <div className="bg-purple-50 p-4 rounded-xl text-center">
+                  <p className="text-3xl font-bold text-purple-600">50+</p>
+                  <p className="text-gray-600 text-sm">Tenaga Pengajar</p>
+                </div>
+                <div className="bg-green-50 p-4 rounded-xl text-center">
+                  <p className="text-3xl font-bold text-green-600">95%</p>
+                  <p className="text-gray-600 text-sm">Tingkat Kelulusan</p>
+                </div>
+                <div className="bg-orange-50 p-4 rounded-xl text-center">
+                  <p className="text-3xl font-bold text-orange-600">100+</p>
+                  <p className="text-gray-600 text-sm">Penghafal Al-Qur'an</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Carousel Section */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
