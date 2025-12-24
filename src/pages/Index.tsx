@@ -381,20 +381,6 @@ const Index = () => {
                 ))}
               </div>
               
-              <div className="mt-8 flex flex-col sm:flex-row gap-4">
-                <Button asChild size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg">
-                  <Link to="/select-level">
-                    <FileText className="mr-2 h-5 w-5" />
-                    Mulai Pendaftaran
-                  </Link>
-                </Button>
-                <Button asChild size="lg" variant="outline" className="border-2 border-blue-600 text-blue-600 hover:bg-blue-50">
-                  <a href="/panduan-pendaftaran.pdf" download>
-                    <Download className="mr-2 h-5 w-5" />
-                    Unduh Panduan
-                  </a>
-                </Button>
-              </div>
             </div>
             
             {/* Registration CTA Image */}
@@ -404,17 +390,6 @@ const Index = () => {
                 alt="Daftar Sekarang - Pondok Pesantren Antar Benua" 
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
-              <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                <h3 className="text-2xl font-bold mb-2">Bergabunglah Bersama Kami!</h3>
-                <p className="text-white/90 mb-4 text-sm">Wujudkan impian menjadi generasi Qur'ani yang berakhlak mulia</p>
-                <Button asChild className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 shadow-lg">
-                  <Link to="/select-level">
-                    <FileText className="mr-2 h-5 w-5" />
-                    Daftar Sekarang
-                  </Link>
-                </Button>
-              </div>
             </div>
           </div>
         </div>
@@ -433,20 +408,6 @@ const Index = () => {
               <p className="text-gray-400 leading-relaxed mb-6 max-w-md">
                 Mencetak Generasi Qur'ani yang cerdas, cermat, intelek, kreatif, mandiri, dan berakhlak mulia untuk masa depan bangsa dan agama.
               </p>
-              <div className="flex gap-3">
-                <Button asChild size="sm" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
-                  <Link to="/select-level">
-                    <FileText className="mr-2 h-4 w-4" />
-                    Daftar Sekarang
-                  </Link>
-                </Button>
-                <Button asChild size="sm" variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white">
-                  <Link to="/student">
-                    <Users className="mr-2 h-4 w-4" />
-                    Login
-                  </Link>
-                </Button>
-              </div>
             </div>
             
             {/* Quick Links */}
