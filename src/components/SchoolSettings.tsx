@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -8,33 +7,31 @@ import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
+import HomePageSettings from "@/components/admin/HomePageSettings";
+import RegistrationFormSettings from "@/components/admin/RegistrationFormSettings";
 import {
   School,
   Save,
-  MapPin,
-  Phone,
-  Mail,
-  Globe,
   Calendar,
-  Users,
-  GraduationCap,
   Clock,
+  Home,
+  FileText,
 } from "lucide-react";
 
 const SchoolSettings = () => {
   const { toast } = useToast();
   
   const [schoolData, setSchoolData] = useState({
-    name: "SMP Negeri 1 Jakarta",
+    name: "Pondok Pesantren Antar Benua",
     npsn: "20109031",
-    address: "Jl. Merdeka No. 123, Jakarta Pusat",
-    phone: "(021) 3456789",
-    email: "info@smpn1jakarta.sch.id",
-    website: "www.smpn1jakarta.sch.id",
-    principal: "Dr. Ahmad Suryadi, M.Pd",
+    address: "Jl. Pesantren No. 123, Jakarta Selatan",
+    phone: "(021) 1234567",
+    email: "info@ppab.sch.id",
+    website: "www.ppab.sch.id",
+    principal: "KH. Ahmad Suryadi, M.Pd",
     accreditation: "A",
     capacity: 480,
-    description: "SMP Negeri 1 Jakarta adalah sekolah menengah pertama negeri yang berlokasi di Jakarta Pusat. Sekolah ini memiliki visi untuk menciptakan generasi yang cerdas, berkarakter, dan berprestasi.",
+    description: "Pondok Pesantren Antar Benua adalah lembaga pendidikan Islam terpadu yang menggabungkan pendidikan pesantren tradisional dengan kurikulum nasional dan teknologi modern.",
   });
 
   const [registrationSettings, setRegistrationSettings] = useState({
@@ -84,10 +81,18 @@ const SchoolSettings = () => {
       </div>
 
       <Tabs defaultValue="school" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-3">
+        <TabsList className="grid w-full grid-cols-5">
           <TabsTrigger value="school">Data Sekolah</TabsTrigger>
           <TabsTrigger value="registration">Pendaftaran</TabsTrigger>
           <TabsTrigger value="system">Sistem</TabsTrigger>
+          <TabsTrigger value="homepage" className="flex items-center gap-1">
+            <Home className="h-3 w-3" />
+            Halaman Beranda
+          </TabsTrigger>
+          <TabsTrigger value="regform" className="flex items-center gap-1">
+            <FileText className="h-3 w-3" />
+            Form Registrasi
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="school">
