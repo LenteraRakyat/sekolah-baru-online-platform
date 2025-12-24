@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,6 +8,13 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Badge } from "@/components/ui/badge";
 import Header from "@/components/Header";
 import { 
   Calendar, 
@@ -22,7 +28,8 @@ import {
   Phone,
   Mail,
   Download,
-  FileCheck
+  FileCheck,
+  HelpCircle
 } from "lucide-react";
 import schoolBuilding from "@/assets/school-building.jpg";
 import studentsClassroom from "@/assets/students-classroom.jpg";
@@ -391,6 +398,116 @@ const Index = () => {
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20 bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/30">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <Badge className="mb-4 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 border-blue-200">
+              <HelpCircle className="h-3 w-3 mr-1" />
+              Pertanyaan Umum
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent">
+              Tanya Jawab (FAQ)
+            </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Temukan jawaban atas pertanyaan yang sering diajukan seputar pendaftaran dan kegiatan di Pondok Pesantren Antar Benua
+            </p>
+          </div>
+
+          <div className="max-w-3xl mx-auto">
+            <Accordion type="single" collapsible className="space-y-4">
+              <AccordionItem value="item-1" className="bg-white rounded-xl shadow-md border-none px-6">
+                <AccordionTrigger className="text-left font-semibold text-gray-800 hover:text-blue-600 py-5">
+                  Kapan periode pendaftaran santri baru dibuka?
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-600 pb-5">
+                  Pendaftaran santri baru dibuka setiap tahun ajaran baru, biasanya mulai bulan Januari hingga Juni. 
+                  Untuk informasi lebih detail mengenai jadwal pendaftaran tahun ini, silakan hubungi bagian administrasi 
+                  atau pantau pengumuman resmi di website dan media sosial kami.
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="item-2" className="bg-white rounded-xl shadow-md border-none px-6">
+                <AccordionTrigger className="text-left font-semibold text-gray-800 hover:text-blue-600 py-5">
+                  Apa saja program pendidikan yang tersedia?
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-600 pb-5">
+                  Pondok Pesantren Antar Benua menyediakan program pendidikan untuk jenjang MI (Madrasah Ibtidaiyah), 
+                  MTs (Madrasah Tsanawiyah), dan MA (Madrasah Aliyah). Setiap jenjang memadukan kurikulum nasional 
+                  dengan kurikulum pesantren yang mencakup tahfidz Al-Qur'an, kitab kuning, dan ilmu-ilmu keislaman lainnya.
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="item-3" className="bg-white rounded-xl shadow-md border-none px-6">
+                <AccordionTrigger className="text-left font-semibold text-gray-800 hover:text-blue-600 py-5">
+                  Berapa biaya pendaftaran dan SPP bulanan?
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-600 pb-5">
+                  Biaya pendaftaran dan SPP bervariasi sesuai jenjang pendidikan. Untuk informasi detail mengenai 
+                  biaya pendidikan, silakan hubungi bagian administrasi kami. Kami juga menyediakan program beasiswa 
+                  bagi santri berprestasi dan santri dari keluarga kurang mampu.
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="item-4" className="bg-white rounded-xl shadow-md border-none px-6">
+                <AccordionTrigger className="text-left font-semibold text-gray-800 hover:text-blue-600 py-5">
+                  Apakah santri wajib tinggal di asrama?
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-600 pb-5">
+                  Ya, seluruh santri diwajibkan tinggal di asrama untuk mengikuti program pendidikan secara optimal. 
+                  Asrama kami dilengkapi dengan fasilitas yang nyaman dan aman, serta dibimbing oleh ustadz/ustadzah 
+                  yang berpengalaman dalam mendampingi santri selama 24 jam.
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="item-5" className="bg-white rounded-xl shadow-md border-none px-6">
+                <AccordionTrigger className="text-left font-semibold text-gray-800 hover:text-blue-600 py-5">
+                  Bagaimana sistem kunjungan orang tua?
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-600 pb-5">
+                  Orang tua dapat mengunjungi santri pada hari dan jam yang telah ditentukan oleh pihak pesantren, 
+                  biasanya pada hari Minggu atau hari libur. Untuk kunjungan di luar jadwal, orang tua dapat 
+                  mengajukan izin terlebih dahulu kepada pengasuh asrama.
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="item-6" className="bg-white rounded-xl shadow-md border-none px-6">
+                <AccordionTrigger className="text-left font-semibold text-gray-800 hover:text-blue-600 py-5">
+                  Apa saja fasilitas yang tersedia di pesantren?
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-600 pb-5">
+                  Pesantren kami dilengkapi dengan berbagai fasilitas modern termasuk ruang kelas ber-AC, 
+                  laboratorium IPA dan komputer, perpustakaan, masjid, asrama putra dan putri terpisah, 
+                  lapangan olahraga, kantin, dan UKS. Seluruh area pesantren dijaga keamanannya 24 jam.
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="item-7" className="bg-white rounded-xl shadow-md border-none px-6">
+                <AccordionTrigger className="text-left font-semibold text-gray-800 hover:text-blue-600 py-5">
+                  Bagaimana cara mendaftar secara online?
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-600 pb-5">
+                  Pendaftaran online dapat dilakukan melalui website ini dengan mengklik tombol "Daftar Sekarang". 
+                  Isi formulir pendaftaran dengan lengkap, unggah dokumen yang diperlukan, dan lakukan pembayaran 
+                  biaya pendaftaran. Setelah itu, tunggu konfirmasi dari panitia untuk jadwal tes seleksi.
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="item-8" className="bg-white rounded-xl shadow-md border-none px-6">
+                <AccordionTrigger className="text-left font-semibold text-gray-800 hover:text-blue-600 py-5">
+                  Apa saja kegiatan ekstrakurikuler yang ada?
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-600 pb-5">
+                  Pesantren menyediakan berbagai kegiatan ekstrakurikuler seperti Pramuka, Paskibra, 
+                  Seni Hadrah/Marawis, Kaligrafi, Jurnalistik, English Club, Arabic Club, Olahraga (Futsal, 
+                  Badminton, Panahan), dan berbagai kegiatan pengembangan soft skill lainnya.
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
           </div>
         </div>
       </section>
