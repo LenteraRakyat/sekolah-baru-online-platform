@@ -409,6 +409,14 @@ const SchoolSettings = () => {
             </CardContent>
           </Card>
         </TabsContent>
+
+        <TabsContent value="homepage">
+          <HomePageSettings />
+        </TabsContent>
+
+        <TabsContent value="regform">
+          <RegistrationFormSettings />
+        </TabsContent>
       </Tabs>
     </div>
   );
